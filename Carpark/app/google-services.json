@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "691162354611",
+    "firebase_url": "https://carpark-9c5d5.firebaseio.com",
+    "project_id": "carpark-9c5d5",
+    "storage_bucket": "carpark-9c5d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691162354611:android:2b9c75f62217dd34",
+        "android_client_info": {
+          "package_name": "com.example.divyang.carpark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "691162354611-i6g5m9849pbju154scqq1t3731q3jfj1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.divyang.carpark",
+            "certificate_hash": "c73064bdaa9ea7295c6a9e2bfd106a3194c71459"
+          }
+        },
+        {
+          "client_id": "691162354611-n55no0f0qhgaq3u5krtsvf6a1nbrrhqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP91FhciZZnhQfR3Gako-kRB48sUmGWcc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "691162354611-n55no0f0qhgaq3u5krtsvf6a1nbrrhqq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
