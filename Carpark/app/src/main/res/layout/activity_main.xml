@@ -7,19 +7,43 @@
     android:layout_height="match_parent"
     tools:context="com.example.divyang.carpark.MainActivity">
 
-    <EditText
-        android:id="@+id/value"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:hint="enter Value"
+        android:text="60"
+        android:layout_centerHorizontal="true"
+        android:textSize="60dp"
         />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Firebase"
-        android:layout_below="@+id/value"
+        android:layout_below="@+id/number"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/status"
+        android:textSize="20dp"
         />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        >
+    <Button
+        android:id="@+id/enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/enter"
+        android:text="Exit"
+        android:id="@+id/exit"
+        />
+    </RelativeLayout>
+
 </RelativeLayout>
