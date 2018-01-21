@@ -30,6 +30,7 @@
         android:layout_below="@+id/number"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:id="@+id/Minilayout"
         >
     <Button
         android:id="@+id/enter"
@@ -44,6 +45,26 @@
         android:text="Exit"
         android:id="@+id/exit"
         />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Minilayout"
+        android:layout_centerHorizontal="true"
+        >
+        <Button
+            android:id="@+id/book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/book"
+            android:text="parked"
+            android:id="@+id/parked"
+            />
     </RelativeLayout>
 
 </RelativeLayout>
