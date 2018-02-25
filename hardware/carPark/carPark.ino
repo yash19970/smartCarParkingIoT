@@ -17,16 +17,14 @@ pinMode(echoPin2, INPUT);
 Serial.begin(9600); // Starts the serial communication
 }
 int distance2 , distance1;
-
+int flag1=0, flag2=0;
 void loop() {
-// Prints the distance on the Serial Monitor
-//Serial.println("Distance: ");
-//Serial.println(distance);
 distance1 = SonarSensor(trigPin,echoPin);
-if(distance1 <=9){
-Serial.print("1 ");
-Serial.println(distance1);
+if(distance1 <=2){
+//Serial.print("1 ");
+//Serial.println(distance1);
 digitalWrite(ledPin,HIGH);
+flag1=1;
 delayMicroseconds(100000);
 }
 else
@@ -34,9 +32,9 @@ else
   digitalWrite(ledPin,LOW);
 }
 distance2 = SonarSensor(trigPin2,echoPin2);
-if(distance2 <=4){
-Serial.print("2 ");
-Serial.println(distance2);
+if(distance2 <=2){
+//Serial.print("2 ");
+//Serial.println(distance2);
 digitalWrite(ledPin2,HIGH);
 delayMicroseconds(100000);
 }
@@ -44,11 +42,31 @@ else
 {
   digitalWrite(ledPin2,LOW);
 }
-/*else if(distance >17 && distance< 20){
-Serial.println(distance);
-digitalWrite(ledPin,HIGH);
-delayMicroseconds(100000);
-}*/
+//here
+String readString= "";
+while (Serial.available()) {
+    delay(3);  
+    char c = Serial.read();
+    readString += c; 
+}
+
+readString.trim();
+  if (readString.length() >0) {
+    if (readString == "1"){
+      Serial.println("switching on");
+      digitalWrite(ledPin, HIGH);
+      delay(2000);
+    }
+    if (readString == "2")
+    {
+      Serial.println("switching off");
+      digitalWrite(ledPin2, HIGH);
+      delay(2000);
+    }
+
+    readString="";
+}  
+
 
 /*APPLY logic: if trigpin is 1 and distance is less than 4 then use sensor 1 else use sensor 2 */
 
