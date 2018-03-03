@@ -2,7 +2,7 @@ import serial
 import time
 import pyrebase
 from time import gmtime, strftime	
-ard = serial.Serial("/dev/ttyACM0",9600)
+ard = serial.Serial("/dev/ttyACM1",9600)
 config = {
     "apiKey": "AIzaSyD01mwCYWJ4x-grwrAhZh2fSesfToH_QVA",
     "authDomain": "carpark-9c5d5.firebaseapp.com",
@@ -20,9 +20,13 @@ db = firebase.database()
 def stream_handler(message):
     # print(message["event"]) # put
     #print(message["path"]) # /-K7yGTTEp7O549EzTYtI
-    #print(message["data"]) # {'title': 'Pyrebase', "body": "etc..."}
+    print(message["data"]) # {'title': 'Pyrebase', "body": "etc..."}
     x = message["path"].split("/")
     if(x[1] != ""):
-   		#print(type(x[1]))
+    	#ard.write(x[1].encode())
+    	print(x[1])
     	ard.write(x[1].encode())
+    	ard.write((message["data"].encode()))
+
+
 my_stream = db.child("sensor").stream(stream_handler)

@@ -18,14 +18,17 @@ Serial.begin(9600); // Starts the serial communication
 }
 int distance2 , distance1;
 int flag1=0, flag2=0;
+int checkFlag1=0,checkFlag2=0;
 void loop() {
 distance1 = SonarSensor(trigPin,echoPin);
 if(distance1 <=2){
-//Serial.print("1 ");
-//Serial.println(distance1);
+Serial.print("1 ");
+Serial.println(distance1);
 digitalWrite(ledPin,HIGH);
 flag1=1;
 delayMicroseconds(100000);
+}else if(checkFlag1==1){
+    digitalWrite(ledPin,HIGH);
 }
 else
 {
@@ -33,10 +36,13 @@ else
 }
 distance2 = SonarSensor(trigPin2,echoPin2);
 if(distance2 <=2){
-//Serial.print("2 ");
-//Serial.println(distance2);
+Serial.print("2 ");
+Serial.println(distance2);
 digitalWrite(ledPin2,HIGH);
 delayMicroseconds(100000);
+}
+else if(checkFlag2==1){
+    digitalWrite(ledPin,HIGH);
 }
 else
 {
@@ -45,16 +51,25 @@ else
 //here
 String readString= "";
 while (Serial.available()) {
-    delay(3);  
+    //Serial.print(readString);
+    delay(10);  
     char c = Serial.read();
     readString += c; 
+    
 }
 
 readString.trim();
   if (readString.length() >0) {
-    if (readString == "1"){
+    Serial.print(readString);
+    if (readString == "1yes"){
       Serial.println("switching on");
+      String readString1= "";
       digitalWrite(ledPin, HIGH);
+      checkFlag1=1;
+      delay(2000);
+    }else if(readString == "1no"){
+      digitalWrite(ledPin, LOW);
+      checkFlag1=0;
       delay(2000);
     }
     if (readString == "2")
@@ -62,6 +77,7 @@ readString.trim();
       Serial.println("switching off");
       digitalWrite(ledPin2, HIGH);
       delay(2000);
+      checkFlag2=1;
     }
 
     readString="";
