@@ -42,6 +42,14 @@ public class loginActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
+        signup1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"SIGNUP",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(loginActivity.this,SignUp.class);
+                startActivity(i);
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
