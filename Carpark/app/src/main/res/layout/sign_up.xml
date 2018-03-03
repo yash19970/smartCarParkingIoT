@@ -4,7 +4,8 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/emails"
+        android:theme="@style/MyEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -12,39 +13,61 @@
         android:layout_marginTop="91dp"
         android:hint="Email id"
         android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText"
-        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/emails"
+        android:layout_below="@+id/emails"
         android:layout_marginTop="35dp"
         android:ems="10"
         android:hint="Passowrd"
-        android:inputType="textPassword" />
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        android:theme="@style/MyEditText"
+        android:password="true"
+        />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/confirmpassword1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editText2"
-        android:layout_below="@+id/editText2"
+        android:layout_alignEnd="@+id/password1"
+        android:layout_below="@+id/password1"
         android:layout_marginTop="29dp"
+        android:password="true"
         android:hint="Confirm Passowrd"
+        android:theme="@style/MyEditText"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        />
 
     <Button
-        android:id="@+id/signup1"
+        android:id="@+id/signupbutton"
         android:layout_width="match_parent"
-
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/custombutton"
         android:text="Sign UP"
         android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+
+        />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone" android:layout_below="@+id/activity_main"
+        />
+
 </RelativeLayout>

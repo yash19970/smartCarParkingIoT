@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".qrGeneration">
         </activity>
+        <activity android:name=".SignUp">
+        </activity>
 
         <receiver android:name=".MyAlarm"
             android:enabled="true"
