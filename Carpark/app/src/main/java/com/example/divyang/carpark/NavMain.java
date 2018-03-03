@@ -56,7 +56,7 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
             case 2:
                 Bundle bundle3 = new Bundle();
                 fragment = new bookingHistory();
-                title = "booking";
+                title = "booking_history";
                 break;
 
             case 3:
