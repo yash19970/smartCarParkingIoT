@@ -143,6 +143,8 @@ public class MainActivity extends Fragment {
                 Toast.makeText(getActivity(), "booked", Toast.LENGTH_SHORT).show();
                 carParked(reference);
 
+                Intent i = new Intent(getActivity(),qrGeneration.class);
+                startActivity(i);
             }
         });
         return view;
@@ -156,9 +158,6 @@ public class MainActivity extends Fragment {
                 + (i * 1000),pendingIntent);
 
     }
-
-
-
 
         void carParked(final DatabaseReference references){
 
