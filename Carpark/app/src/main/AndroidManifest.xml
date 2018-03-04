@@ -28,6 +28,8 @@
         </activity>
         <activity android:name=".SearchPage">
         </activity>
+        <activity android:name=".ConfirmationPage">
+        </activity>
 
         <receiver android:name=".MyAlarm"
             android:enabled="true"

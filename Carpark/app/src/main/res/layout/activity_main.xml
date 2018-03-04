@@ -69,19 +69,7 @@
         android:layout_below="@+id/Minilayout"
         android:layout_centerHorizontal="true"
         >
-        <Button
-            android:id="@+id/book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Book"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/book"
-            android:text="parked"
-            android:id="@+id/parked"
-            />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +78,29 @@
             android:id="@+id/logout"
             />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/parked"
+        android:background="@drawable/custombutton"
+        android:text="Park Later"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/parked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/status"
+        android:background="@drawable/custombutton"
+        android:layout_marginLeft="2dp"
+        android:text="Park Now"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>
     <fragment

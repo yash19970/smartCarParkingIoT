@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends Fragment {
     private Button enter,exit,book,parked,logout;
-    private DatabaseReference locationreference,mainReference;
+    private DatabaseReference locationreference,mainReference,sensorlocationreference;
     private FirebaseAuth auth;
     private TextView number,status;
     View view;
@@ -53,6 +54,7 @@ public class MainActivity extends Fragment {
         locationName = getArguments().getString("locationName");
 
         locationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName).child("TotalSlots");
+        sensorlocationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
         mainReference = FirebaseDatabase.getInstance().getReference();
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -137,16 +139,49 @@ public class MainActivity extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Long tsLong = System.currentTimeMillis() / 1000;
-                String ts = tsLong.toString();
-                mainReference.child("sensor").child("1").child("status").setValue("yes");
+                sensorlocationreference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
 
-                setAlarm(60);
-                Toast.makeText(getActivity(), "booked", Toast.LENGTH_SHORT).show();
-                carParked(locationreference);
+                            String[] str = new String[2];
 
-                Intent i = new Intent(getActivity(),qrGeneration.class);
-                startActivity(i);
+                            Sensor sensor = ds.getValue(Sensor.class);
+                            if(sensor.getBooked().equals("no") && sensor.getStatus().equals("no")){
+                                str[0] = locationName;
+                                str[1] = ds.getKey();
+
+                                Toast.makeText(getActivity(),locationName+ds.getKey(),Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getActivity(),ConfirmationPage.class);
+//
+//                                // pass data from fragment to activity
+                                Bundle bundle = new Bundle();
+                                bundle.putStringArray("abc",str);
+//
+                                intent.putExtra("data",bundle);
+                                startActivity(intent);
+                                break;
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+//                Long tsLong = System.currentTimeMillis() / 1000;
+//                String ts = tsLong.toString();
+//                mainReference.child("sensor").child("1").child("status").setValue("yes");
+//
+//                setAlarm(60);
+//                Toast.makeText(getActivity(), "booked", Toast.LENGTH_SHORT).show();
+//                carParked(locationreference);
+//
+//                Intent i = new Intent(getActivity(),ConfirmationPage.class);
+//                startActivity(i);
             }
         });
         return view;
