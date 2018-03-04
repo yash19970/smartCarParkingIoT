@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class ConfirmationPage extends AppCompatActivity {
     TextView location,slot;
     Button confirm;
+    String[] str = new String[2];
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,19 +23,20 @@ public class ConfirmationPage extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = getIntent().getBundleExtra("data");
-        String[] str = new String[2];
+
         str = bundle.getStringArray("abc");
         location = (TextView)findViewById(R.id.location);
         slot = (TextView) findViewById(R.id.slot);
         confirm = (Button)  findViewById(R.id.confirm);
-
-
         location.setText(str[0]);
-        slot.setText(str[1]);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent i = new Intent(ConfirmationPage.this,qrGeneration.class );
+                i.putExtra("locationNmae",str[0]);
+                startActivity(i);
 
                 
             }

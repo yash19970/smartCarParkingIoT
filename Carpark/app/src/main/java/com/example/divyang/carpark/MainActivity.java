@@ -138,63 +138,20 @@ public class MainActivity extends Fragment {
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String[] str = new String[2];
+                str[0] = locationName;
+                Bundle bundle = new Bundle();
+                bundle.putStringArray("abc",str);
+                Intent intent = new Intent(getActivity(),ConfirmationPage.class);
+                intent.putExtra("data",bundle);
+                startActivity(intent);
 
-                sensorlocationreference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-
-                            String[] str = new String[2];
-
-                            Sensor sensor = ds.getValue(Sensor.class);
-                            if(sensor.getBooked().equals("no") && sensor.getStatus().equals("no")){
-                                str[0] = locationName;
-                                str[1] = ds.getKey();
-
-                                Toast.makeText(getActivity(),locationName+ds.getKey(),Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getActivity(),ConfirmationPage.class);
-//
-//                                // pass data from fragment to activity
-                                Bundle bundle = new Bundle();
-                                bundle.putStringArray("abc",str);
-//
-                                intent.putExtra("data",bundle);
-                                startActivity(intent);
-                                break;
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-//                Long tsLong = System.currentTimeMillis() / 1000;
-//                String ts = tsLong.toString();
-//                mainReference.child("sensor").child("1").child("status").setValue("yes");
-//
-//                setAlarm(60);
-//                Toast.makeText(getActivity(), "booked", Toast.LENGTH_SHORT).show();
-//                carParked(locationreference);
-//
-//                Intent i = new Intent(getActivity(),ConfirmationPage.class);
-//                startActivity(i);
             }
         });
         return view;
     }
 
-    private void setAlarm(int i) {
-        AlarmManager manager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getActivity(),MyAlarm.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(),0,intent,0);
-        manager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()
-                + (i * 1000),pendingIntent);
 
-    }
 
         void carParked(final DatabaseReference references){
 
