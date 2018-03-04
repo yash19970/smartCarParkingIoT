@@ -5,77 +5,80 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     >
-<LinearLayout
-    android:id="@+id/activity_main"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.divyang.carpark.MainActivity">
 
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "
-        android:textSize="50sp"
-        android:layout_gravity="center_horizontal"
-        />
-
-
-    <EditText
-        android:layout_width="270dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:theme="@style/MyEditText"
-        android:hint="Username"
-        android:textColorHint="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
-        android:id="@+id/username1"
-        />
-
-    <EditText
-        android:layout_width="270dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:password="true"
-        android:theme="@style/MyEditText"
-        android:hint="password"
-        android:textColorHint="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
-        android:id="@+id/password1"
-        />
-
-    <Button
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/custombutton"
-        android:text="Login"
-        android:textSize="15sp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/loginButton"
-        />
-    <Button
+    <LinearLayout
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="163dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="Sign UP"
-        android:textSize="15sp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/signup1"
-        />
-</LinearLayout>
-<ProgressBar
-android:id="@+id/progressBar"
-android:layout_width="40dp"
-android:layout_height="40dp"
-android:layout_gravity="center|bottom"
-android:layout_marginBottom="20dp"
-android:visibility="gone" android:layout_below="@+id/activity_main"
-    />
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="71dp"
+        android:orientation="vertical"
+        tools:context="com.example.divyang.carpark.MainActivity">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/username1"
+                android:layout_width="270dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="51dp"
+                android:hint="Username"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:theme="@style/MyEditText" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/username1"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center|bottom"
+                android:visibility="gone"
+                android:theme="@style/MyEditText"
+                />
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/password1"
+            android:layout_width="270dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:hint="password"
+            android:password="true"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorPrimary"
+            android:theme="@style/MyEditText" />
+
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/custombutton"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/signup1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="163dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Sign UP"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+    </LinearLayout>
+
 </RelativeLayout>

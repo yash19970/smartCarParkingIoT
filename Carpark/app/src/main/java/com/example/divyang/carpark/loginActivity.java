@@ -17,9 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * Created by divya on 21-01-2018.
- */
 
 public class loginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
@@ -88,7 +85,7 @@ public class loginActivity extends AppCompatActivity {
                                             Toast.makeText(loginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                         }
                                     } else {
-                                        Intent intent = new Intent(loginActivity.this, NavMain.class);
+                                        Intent intent = new Intent(loginActivity.this, SearchPage.class);
                                         startActivity(intent);
                                         finish();
                                     }

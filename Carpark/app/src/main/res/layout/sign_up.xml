@@ -84,6 +84,7 @@
         android:layout_below="@+id/emails"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
+        android:theme="@style/MyEditText"
         />
 
 </RelativeLayout>

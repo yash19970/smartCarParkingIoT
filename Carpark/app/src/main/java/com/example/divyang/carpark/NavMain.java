@@ -1,5 +1,6 @@
 package com.example.divyang.carpark;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import android.view.View;
 public class NavMain extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+    Intent i = getIntent();
+    String locationName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +30,10 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+        Intent i = getIntent();
+        locationName = i.getStringExtra("locationName");
         displayView(0);
-        // opens zeroth fragment 
-
-
-
+        // opens zeroth fragment
     }
 
 
@@ -44,9 +46,9 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
         switch (position) {
             case 0:
                 Bundle bundle = new Bundle();
-                // bundle.putStringArray("key2",tok);
+                 bundle.putString("locationName",locationName);
                  fragment = new MainActivity();
-                // fragment.setArguments(bundle);
+                 fragment.setArguments(bundle);
                 title = "HOME";
                 break;
             case 1:
