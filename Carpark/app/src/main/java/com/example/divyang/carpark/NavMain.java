@@ -27,6 +27,8 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+        displayView(0);
+        // opens zeroth fragment 
 
 
 
