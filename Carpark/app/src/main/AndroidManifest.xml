@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".SignUp">
         </activity>
+        <activity android:name=".SearchPage">
+        </activity>
 
         <receiver android:name=".MyAlarm"
             android:enabled="true"
