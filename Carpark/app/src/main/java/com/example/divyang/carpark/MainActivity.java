@@ -33,10 +33,11 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends Fragment {
     private Button enter,exit,book,parked,logout;
-    private DatabaseReference reference,mainReference;
+    private DatabaseReference locationreference,mainReference;
     private FirebaseAuth auth;
     private TextView number,status;
     View view;
+    String locationName;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,10 +48,11 @@ public class MainActivity extends Fragment {
         auth = FirebaseAuth.getInstance();
         parked = (Button) view.findViewById(R.id.parked);
         exit = (Button) view.findViewById(R.id.exit);
-        number = (TextView) view.findViewById(R.id.number);
+        number = (TextView) view.findViewById(R.id.number1);
         status = (TextView) view.findViewById(R.id.status);
+        locationName = getArguments().getString("locationName");
 
-        reference = FirebaseDatabase.getInstance().getReference().child("parking");//pointing to null
+        locationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName).child("TotalSlots");
         mainReference = FirebaseDatabase.getInstance().getReference();
 
         logout.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +72,7 @@ public class MainActivity extends Fragment {
             @Override
             public void onClick(View view) {
 
-                carParked(reference);
+                carParked(locationreference);
 
             }
         });
@@ -78,7 +80,7 @@ public class MainActivity extends Fragment {
             @Override
             public void onClick(View view) {
 
-                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                locationreference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -90,7 +92,7 @@ public class MainActivity extends Fragment {
                         } else {
                             slot--;
                             slots = String.valueOf(slot);
-                            reference.setValue(slots);
+                            locationreference.setValue(slots);
                         }
 
                     }
@@ -105,7 +107,7 @@ public class MainActivity extends Fragment {
 
             }
         });
-        reference.addValueEventListener(new ValueEventListener() {
+        locationreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -141,7 +143,7 @@ public class MainActivity extends Fragment {
 
                 setAlarm(60);
                 Toast.makeText(getActivity(), "booked", Toast.LENGTH_SHORT).show();
-                carParked(reference);
+                carParked(locationreference);
 
                 Intent i = new Intent(getActivity(),qrGeneration.class);
                 startActivity(i);
@@ -183,13 +185,7 @@ public class MainActivity extends Fragment {
 
                 }
             });
-
-
     }
-
-
-
-
 }
 
 
