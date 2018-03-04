@@ -16,13 +16,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUp extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     private Button  signupbutton;
-    private EditText confirmpassword1,password1,emails;
+    private EditText confirmpassword1,password1,emails,username;
+    private DatabaseReference reference;
+    private Boolean active_booking,active_parking;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class SignUp extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         signupbutton = (Button) findViewById(R.id.signupbutton);
         emails = (EditText) findViewById(R.id.emails);
+        username = (EditText)findViewById(R.id.username);
         password1 = (EditText) findViewById(R.id.password1);
         confirmpassword1 = (EditText) findViewById(R.id.confirmpassword1);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -39,9 +44,10 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String checkemail = emails.getText().toString().trim();
+                final String checkemail = emails.getText().toString().trim();
                 String password = password1.getText().toString().trim();
                 String confrimpassword = confirmpassword1.getText().toString().trim();
+                final String checkUsername = username.getText().toString().trim();
                 if (TextUtils.isEmpty(checkemail)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                     return;
@@ -74,6 +80,12 @@ public class SignUp extends AppCompatActivity {
                                     Toast.makeText(SignUp.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+
+                                    reference = FirebaseDatabase.getInstance().getReference("User");
+                                    String userId = reference.push().getKey();
+                                    User user = new User(auth.getCurrentUser().getUid(),checkUsername,checkemail,false,false);
+
+                                    reference.child(userId).setValue(user);
                                     startActivity(new Intent(SignUp.this, NavMain.class));
                                     finish();
                                 }
