@@ -8,12 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
+    DatabaseReference firebaseDatabase,mainreference,reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,65 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
+                final String[] scannedString = result.getContents().toString().split("/");
+                firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("User");
+                mainreference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[1]).child("Sensor");
+                reference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[1]).child("TotalSlots");
+                firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for(DataSnapshot ds : dataSnapshot.getChildren())
+                        {
+                            if(ds.getKey().equals(scannedString[0])){
+                                User user = ds.getValue(User.class);
+                                if(user.isActive_booking() && !user.isActive_parking())
+                                firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(true);
+                                if(user.isActive_booking() && user.isActive_parking()){
+                                    firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(false);
+                                    firebaseDatabase.child(ds.getKey()).child("active_booking").setValue(false);
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                mainreference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                            if (ds.getKey().equals(scannedString[2])){
+                                Sensor sensor = ds.getValue(Sensor.class);
+                            if (sensor.getStatus().equals("yes") && sensor.getBooked().equals("no")) {
+                                mainreference.child(scannedString[2]).child("booked").setValue("yes");
+                            } else if (sensor.getStatus().equals("yes") && sensor.getBooked().equals("yes")) {
+                                mainreference.child(scannedString[2]).child("booked").setValue("no");
+                                mainreference.child(scannedString[2]).child("status").setValue("no");
+                            }
+                            break;
+                        }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
             }
         }
         else {
