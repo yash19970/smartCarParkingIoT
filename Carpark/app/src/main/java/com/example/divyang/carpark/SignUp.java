@@ -85,8 +85,8 @@ public class SignUp extends AppCompatActivity {
                                     String userId = reference.push().getKey();
                                     User user = new User(auth.getCurrentUser().getUid(),checkUsername,checkemail,false,false);
 
-                                    reference.child(userId).setValue(user);
-                                    startActivity(new Intent(SignUp.this, NavMain.class));
+                                    reference.child(auth.getCurrentUser().getUid()).setValue(user);
+                                    startActivity(new Intent(SignUp.this, loginActivity.class));
                                     finish();
                                 }
                             }

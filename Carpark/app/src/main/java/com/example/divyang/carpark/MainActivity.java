@@ -117,7 +117,7 @@ public class MainActivity extends Fragment {
                 int slot;
                 slot = Integer.parseInt(slots);
                 number.setText(slots);
-                if (slot == 60) {
+                if (slot == 0) {
                     status.setText("FULL");
                     number.setTextColor(Color.RED);
                     status.setTextColor(Color.RED);

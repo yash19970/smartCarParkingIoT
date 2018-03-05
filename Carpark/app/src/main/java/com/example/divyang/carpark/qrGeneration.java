@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,18 +30,21 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class qrGeneration extends AppCompatActivity {
     ImageView qrcode;
-    private DatabaseReference reference;
+    private DatabaseReference reference,mainreference;
     String locationName;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_code);
         qrcode = (ImageView) findViewById(R.id.qrcode);
-        loadQrCode(qrcode, "randomstring");
+        auth = FirebaseAuth.getInstance();
+       final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         Intent i = getIntent();
         locationName = i.getStringExtra("locationName");
         reference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
+        mainreference = FirebaseDatabase.getInstance().getReference().child("User");
 
         reference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -50,8 +55,77 @@ public class qrGeneration extends AppCompatActivity {
                          Long tsLong = System.currentTimeMillis() / 1000;
                         String ts = tsLong.toString();
                         reference.child("Sensor").child(ds.getKey()).child("status").setValue("yes");
+                        reference.child("TotalSlots").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String slots = dataSnapshot.getValue().toString();
+                                int slot = Integer.parseInt(slots);
+                                slot--;
+                                reference.child("TotalSlots").setValue(String.valueOf(slot));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                        mainreference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                for(DataSnapshot ds : dataSnapshot.getChildren())
+                                {
+                                    if(ds.getKey().equals(auth.getCurrentUser().getUid())){
+                                            mainreference.child(ds.getKey()).child("active_booking").setValue(true);
+                                            break;
+                                        }
+
+                                }
+
+                                }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 setAlarm(60,locationName,ds.getKey());
+                loadQrCode(qrcode, currentFirebaseUser.getUid()+"/"+locationName+"/"+ds.getKey());
                 Toast.makeText(getApplicationContext(), "booked", Toast.LENGTH_SHORT).show();
                 break;
 

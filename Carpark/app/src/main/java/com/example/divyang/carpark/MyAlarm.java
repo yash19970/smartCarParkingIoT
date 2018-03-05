@@ -28,8 +28,9 @@ public class MyAlarm extends BroadcastReceiver {
       bundle = i.getBundleExtra("abc");
            str = bundle.getStringArray("data");
         mainReference = FirebaseDatabase.getInstance().getReference().child("Location").child(str[0]);
+        Toast.makeText(context, str[0], Toast.LENGTH_LONG).show();
 
-        mainReference.child("Sensor").child(str[1]).child("booked").addValueEventListener(new ValueEventListener() {
+        mainReference.child("Sensor").child(str[1]).child("booked").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Toast.makeText(context, dataSnapshot.getValue().toString(), Toast.LENGTH_LONG).show();

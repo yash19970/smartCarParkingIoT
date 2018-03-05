@@ -26,6 +26,43 @@ public class User {
     }
 
 
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getActive_booking() {
+        return active_booking;
+    }
+
+    public void setActive_booking(Boolean active_booking) {
+        this.active_booking = active_booking;
+    }
+
+    public Boolean getActive_parking() {
+        return active_parking;
+    }
+
+    public void setActive_parking(Boolean active_parking) {
+        this.active_parking = active_parking;
+    }
 }

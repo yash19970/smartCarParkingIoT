@@ -35,8 +35,9 @@ public class ConfirmationPage extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent i = new Intent(ConfirmationPage.this,qrGeneration.class );
-                i.putExtra("locationNmae",str[0]);
+                i.putExtra("locationName",str[0]);
                 startActivity(i);
+                finish();
 
                 
             }
