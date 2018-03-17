@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.divyang.carpark.MainActivity">
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/customecircle"
+        />
+
+    <TextView
+        android:id="@+id/number1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:text="40"
+        android:textColor="@color/colorPrimary"
+        android:textSize="60dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/number"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/status"
+        android:textSize="20dp"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/Minilayout"
+        >
+    <Button
+        android:id="@+id/enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/enter"
+        android:text="Exit"
+        android:id="@+id/exit"
+        />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Minilayout"
+        android:layout_centerHorizontal="true"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/parked"
+            android:text="logout"
+            android:id="@+id/logout"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/parked"
+        android:background="@drawable/custombutton"
+        android:text="Park Later"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/parked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/status"
+        android:background="@drawable/custombutton"
+        android:layout_marginLeft="2dp"
+        android:text="Park Now"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
+    <fragment
+        android:id="@+id/fragment_navigation_drawer"
+        android:name="com.example.divyang.carpark.FragmentDrawer"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:layout="@layout/navigation_drawer"
+        tools:layout="@layout/navigation_drawer" />
+</android.support.v4.widget.DrawerLayout>
