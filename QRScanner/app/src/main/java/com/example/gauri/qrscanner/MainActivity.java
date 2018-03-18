@@ -2,8 +2,11 @@ package com.example.gauri.qrscanner;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -56,10 +59,13 @@ public class MainActivity extends AppCompatActivity {
                 firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("User");
                 mainreference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[1]).child("Sensor");
                 reference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[1]).child("TotalSlots");
+
+
                 firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        Toast.makeText(getApplicationContext(),"inside datasnapshot",Toast.LENGTH_LONG).show();
                         for(DataSnapshot ds : dataSnapshot.getChildren())
                         {
                             if(ds.getKey().equals(scannedString[0])){
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                     firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(false);
                                     firebaseDatabase.child(ds.getKey()).child("active_booking").setValue(false);
                                 }
-
+break;
                             }
 
                         }
@@ -96,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 mainreference.child(scannedString[2]).child("booked").setValue("no");
                                 mainreference.child(scannedString[2]).child("status").setValue("no");
                             }
+                           
                             break;
                         }
                         }
