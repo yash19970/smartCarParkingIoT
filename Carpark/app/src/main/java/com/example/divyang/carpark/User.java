@@ -1,5 +1,7 @@
 package com.example.divyang.carpark;
 
+import java.util.List;
+
 /**
  * Created by gauri on 04/03/18.
  */
@@ -11,18 +13,25 @@ public class User {
     public String email;
     public Boolean active_booking;
     public Boolean active_parking;
+    public List<bookingHistory> bookingHistories;
+
+    public String selectedLocation;
 
     public User(){
 
     }
 
-    public User(String userId,String username, String email, Boolean active_booking, Boolean active_parking) {
+
+
+    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, List<bookingHistory> bookingHistories,String selectedLocation) {
 
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.active_booking = active_booking;
         this.active_parking = active_parking;
+        this.bookingHistories = bookingHistories;
+        this.selectedLocation = selectedLocation;
     }
 
 
@@ -64,5 +73,21 @@ public class User {
 
     public void setActive_parking(Boolean active_parking) {
         this.active_parking = active_parking;
+    }
+
+    public List<bookingHistory> getBookingHistories() {
+        return bookingHistories;
+    }
+
+    public void setBookingHistories(List<bookingHistory> bookingHistories) {
+        this.bookingHistories = bookingHistories;
+    }
+
+    public String getSelectedLocation() {
+        return selectedLocation;
+    }
+
+    public void setSelectedLocation(String selectedLocation) {
+        this.selectedLocation = selectedLocation;
     }
 }

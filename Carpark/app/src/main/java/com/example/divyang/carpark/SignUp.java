@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Collections;
+
 
 public class SignUp extends AppCompatActivity {
     private ProgressBar progressBar;
@@ -83,7 +85,7 @@ public class SignUp extends AppCompatActivity {
 
                                     reference = FirebaseDatabase.getInstance().getReference("User");
                                     String userId = reference.push().getKey();
-                                    User user = new User(auth.getCurrentUser().getUid(),checkUsername,checkemail,false,false);
+                                    User user = new User(auth.getCurrentUser().getUid(),checkUsername,checkemail,false,false, Collections.<bookingHistory>emptyList(),null);
 
                                     reference.child(auth.getCurrentUser().getUid()).setValue(user);
                                     startActivity(new Intent(SignUp.this, loginActivity.class));
