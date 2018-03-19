@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +29,7 @@ import java.util.Map;
 
 public class SearchPage extends AppCompatActivity {
 
-    private DatabaseReference reference;
+    private DatabaseReference reference, reference2;
     private AutoCompleteTextView actv;
     String  locationName;
 
@@ -39,7 +40,6 @@ public class SearchPage extends AppCompatActivity {
         setContentView(R.layout.search_page);
         reference = FirebaseDatabase.getInstance().getReference().child("Location");
         actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-
 
         reference.addChildEventListener(new ChildEventListener() {
             @Override
@@ -102,9 +102,14 @@ public class SearchPage extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId)
             {
                 locationName= (String) parent.getItemAtPosition(position);//locationName
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                reference2 = FirebaseDatabase.getInstance().getReference("User").child(userId).child("SelectedLocation");
+                reference2.setValue(locationName);
+
                 Intent i = new Intent(SearchPage.this,NavMain.class);
                 i.putExtra("locationName", locationName);
                 startActivity(i);
+
             }
         });
 

@@ -12,8 +12,12 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -31,11 +35,24 @@ public class bookingHistory extends Fragment {
         view = inflater.inflate(R.layout.booking_history, container, false);
 
     uid = auth.getInstance().getCurrentUser().getUid();
-    user = auth.getInstance().getCurrentUser();
+
     locationValue = user.getSelectedLocation();
 
 
     databaseReference = FirebaseDatabase.getInstance().getReference("User").child(uid).child("bookingHistories");
+    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            bookingHistoryObject bookingHistoryObject = dataSnapshot.getValue(bookingHistoryObject.class);
+            User user = dataSnapshot.getValue(User.class);
+            bookingHistoryObject.locationValue = user.getSelectedLocation();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    });
     String bookingId = databaseReference.push().getKey();
     bookingHistoryObject obj = new bookingHistoryObject(new Date(),new Date(),locationValue);
 
