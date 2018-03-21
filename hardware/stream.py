@@ -9,7 +9,7 @@ config = {
     "databaseURL": "https://carpark-9c5d5.firebaseio.com",
     "projectId": "carpark-9c5d5",
     "storageBucket": "carpark-9c5d5.appspot.com",
-    "serviceAccount": "/home/divyang/Desktop/pbl/smartCarParkIOT/hardware/CarPark-1c0acc79bed3.json"
+    "serviceAccount": "/home/yash/Downloads/CarPark-1c0acc79bed3.json"
 }
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
@@ -21,10 +21,11 @@ def stream_handler(message):
     # print(message["event"]) # put
     #print(message["path"]) # /-K7yGTTEp7O549EzTYtI
     print(message["data"]) # {'title': 'Pyrebase', "body": "etc..."}
+    print(message["path"])
     x = message["path"].split("/")
     if(x[1] != ""):
     	#ard.write(x[1].encode())
-    	print(x[1])
+    	#print(x[1])
     	ard.write(x[1].encode())
     	ard.write((message["data"].encode()))
 

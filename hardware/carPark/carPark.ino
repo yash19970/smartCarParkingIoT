@@ -21,7 +21,8 @@ int flag1=0, flag2=0;
 int checkFlag1=0,checkFlag2=0;
 void loop() {
 distance1 = SonarSensor(trigPin,echoPin);
-if(distance1 <=2){
+
+if(distance1 <=1){
 Serial.print("1 ");
 Serial.println(distance1);
 digitalWrite(ledPin,HIGH);
@@ -34,15 +35,16 @@ else
 {
   digitalWrite(ledPin,LOW);
 }
+
 distance2 = SonarSensor(trigPin2,echoPin2);
-if(distance2 <=2){
+if(distance2 <=1){
 Serial.print("2 ");
 Serial.println(distance2);
 digitalWrite(ledPin2,HIGH);
 delayMicroseconds(100000);
 }
 else if(checkFlag2==1){
-    digitalWrite(ledPin,HIGH);
+    digitalWrite(ledPin2,HIGH);
 }
 else
 {
@@ -61,23 +63,29 @@ while (Serial.available()) {
 readString.trim();
   if (readString.length() >0) {
     Serial.print(readString);
+    //for snesor 1
     if (readString == "1yes"){
       Serial.println("switching on");
       String readString1= "";
       digitalWrite(ledPin, HIGH);
       checkFlag1=1;
       delay(2000);
-    }else if(readString == "1no"){
+    }else if(readString == "1no" || readString == "1no1no" ){
       digitalWrite(ledPin, LOW);
       checkFlag1=0;
       delay(2000);
     }
-    if (readString == "2")
+    // for sensor2
+    if (readString == "2yes")
     {
       Serial.println("switching off");
       digitalWrite(ledPin2, HIGH);
       delay(2000);
       checkFlag2=1;
+    }else if(readString == "2no" || readString == "2no2no"){
+      digitalWrite(ledPin, LOW);
+      checkFlag2=0;
+      delay(2000);
     }
 
     readString="";
