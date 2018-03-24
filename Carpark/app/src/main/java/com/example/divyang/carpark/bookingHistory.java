@@ -45,7 +45,7 @@ public class bookingHistory extends Fragment {
         public void onDataChange(DataSnapshot dataSnapshot) {
             bookingHistoryObject bookingHistoryObject = dataSnapshot.getValue(bookingHistoryObject.class);
             User user = dataSnapshot.getValue(User.class);
-            bookingHistoryObject.locationValue = user.getSelectedLocation();
+          //  bookingHistoryObject.locationValue = user.getSelectedLocation();
         }
 
         @Override
@@ -54,7 +54,7 @@ public class bookingHistory extends Fragment {
         }
     });
     String bookingId = databaseReference.push().getKey();
-    bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationValue);
+   // bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationValue);
    // databaseReference.child(bookingId).setValue(obj);
 
 
