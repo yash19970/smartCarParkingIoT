@@ -13,7 +13,7 @@ public class User {
     public String email;
     public Boolean active_booking;
     public Boolean active_parking;
-    public List<bookingHistoryObject> bookingHistories;
+    public bookingHistoryObject bookingHistories;
 
     public String selectedLocation;
 
@@ -23,7 +23,7 @@ public class User {
 
 
 
-    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, List<bookingHistoryObject> bookingHistories,String selectedLocation) {
+    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, bookingHistoryObject bookingHistories,String selectedLocation) {
 
         this.userId = userId;
         this.username = username;
@@ -75,11 +75,11 @@ public class User {
         this.active_parking = active_parking;
     }
 
-    public List<bookingHistoryObject> getBookingHistories() {
+    public bookingHistoryObject getBookingHistories() {
         return bookingHistories;
     }
 
-    public void setBookingHistories(List<bookingHistoryObject> bookingHistories) {
+    public void setBookingHistories(bookingHistoryObject bookingHistories) {
         this.bookingHistories = bookingHistories;
     }
 

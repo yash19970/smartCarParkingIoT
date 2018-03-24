@@ -54,7 +54,8 @@ public class bookingHistory extends Fragment {
         }
     });
     String bookingId = databaseReference.push().getKey();
-    bookingHistoryObject obj = new bookingHistoryObject(new Date(),new Date(),locationValue);
+    bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationValue);
+   // databaseReference.child(bookingId).setValue(obj);
 
 
 

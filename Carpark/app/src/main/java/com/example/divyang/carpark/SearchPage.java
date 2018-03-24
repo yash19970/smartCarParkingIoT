@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Array;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +106,14 @@ public class SearchPage extends AppCompatActivity {
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 reference2 = FirebaseDatabase.getInstance().getReference("User").child(userId).child("SelectedLocation");
                 reference2.setValue(locationName);
+                bookingHistoryObject bookingHistoryObject = new bookingHistoryObject();
+                bookingHistoryObject.locationValue = locationName;
+
+                bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationName);
+                FirebaseDatabase.getInstance().getReference("User").child(userId).child("bookingHistory").setValue(obj);
+
+
+
 
                 Intent i = new Intent(SearchPage.this,NavMain.class);
                 i.putExtra("locationName", locationName);
