@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Array;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -107,17 +108,16 @@ public class SearchPage extends AppCompatActivity {
                 reference2 = FirebaseDatabase.getInstance().getReference("User").child(userId).child("SelectedLocation");
                 reference2.setValue(locationName);
                 bookingHistoryObject bookingHistoryObject = new bookingHistoryObject();
-<<<<<<< HEAD
-                bookingHistoryObject.locationValue = locationName;
-
-                bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationName);
-                FirebaseDatabase.getInstance().getReference("User").child(userId).child("bookingHistories").setValue(obj);
-=======
             //    bookingHistoryObject.locationValue = locationName;
-               Date date = new Date(System.currentTimeMillis());
-                bookingHistoryObject obj = new bookingHistoryObject(date.toString(),date.toString(),locationName);
+
+                SimpleDateFormat sdfDestination = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss");
+
+
+                Date dateToBeFormatted = new Date(System.currentTimeMillis());
+                String date = sdfDestination.format(dateToBeFormatted);
+                bookingHistoryObject obj = new bookingHistoryObject(date,date,locationName);
                 FirebaseDatabase.getInstance().getReference("User").child(userId).child("booking history").push().setValue(obj);
->>>>>>> 685e6a4c0a37a57952d7acd633621023f7312e0d
+
 
 
 
