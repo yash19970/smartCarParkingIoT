@@ -107,10 +107,10 @@ public class SearchPage extends AppCompatActivity {
                 reference2 = FirebaseDatabase.getInstance().getReference("User").child(userId).child("SelectedLocation");
                 reference2.setValue(locationName);
                 bookingHistoryObject bookingHistoryObject = new bookingHistoryObject();
-                bookingHistoryObject.locationValue = locationName;
-
-                bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationName);
-                FirebaseDatabase.getInstance().getReference("User").child(userId).child("bookingHistory").setValue(obj);
+            //    bookingHistoryObject.locationValue = locationName;
+               Date date = new Date(System.currentTimeMillis());
+                bookingHistoryObject obj = new bookingHistoryObject(date.toString(),date.toString(),locationName);
+                FirebaseDatabase.getInstance().getReference("User").child(userId).child("booking history").push().setValue(obj);
 
 
 

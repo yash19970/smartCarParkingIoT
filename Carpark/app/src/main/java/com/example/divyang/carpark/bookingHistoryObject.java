@@ -8,50 +8,50 @@ import java.text.DateFormat;
  * Created by gauri on 17/03/18.
  */
 
-public class bookingHistoryObject {
+public  class bookingHistoryObject {
 
 
-    public Date inTime;
-    public Date outTime;
-    public String locationValue;
+
+        private String inTime;
+        private String outTime;
+        private String locationValue;
 
 
-    // empty constructor
-    public bookingHistoryObject() {
+        // empty constructor
+        public bookingHistoryObject() {
+
+        }
+
+        public bookingHistoryObject(String inTime, String outTime, String locationValue) {
+            this.inTime = inTime;
+            this.outTime = outTime;
+            this.locationValue = locationValue;
+        }
+
+        public String getInTime() {
+            return inTime;
+        }
+
+        public void setInTime(String inTime) {
+            this.inTime = inTime;
+        }
+
+        public String getOutTime() {
+            return outTime;
+        }
+
+        public void setOutTime(String outTime) {
+            this.outTime = outTime;
+        }
+
+        public String getLocationValue() {
+            return locationValue;
+        }
+
+        public void setLocationValue(String locationValue) {
+            this.locationValue = locationValue;
+        }
+
 
     }
 
-    public bookingHistoryObject(Date inTime, Date outTime, String locationValue) {
-        this.inTime = inTime;
-        this.outTime = outTime;
-        this.locationValue = locationValue;
-    }
-
-    public Date getInTime() {
-        return inTime;
-    }
-
-    public void setInTime(Date inTime) {
-        this.inTime = inTime;
-    }
-
-    public Date getOutTime() {
-        return outTime;
-    }
-
-    public void setOutTime(Date outTime) {
-        this.outTime = outTime;
-    }
-
-    public String getLocationValue() {
-        return locationValue;
-    }
-
-    public void setLocationValue(String locationValue) {
-        this.locationValue = locationValue;
-    }
-
-
-
-
-}
