@@ -2,6 +2,7 @@ package com.example.divyang.carpark;
 
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
  * Created by divya on 22-01-2018.
  */
 import android.support.v4.app.Fragment;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,20 +24,33 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 
-public class bookingHistory extends Fragment {
+public class bookingHistory extends AppCompatActivity {
     View view;
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
     private String uid;
     private String locationValue;
     private User user;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.booking_history, container, false);
+    private ListView listView;
+    private ArrayList<String> locations;
+    private ArrayList<String> inTime;
+    private ArrayList<String> outTime;
 
-    uid = auth.getInstance().getCurrentUser().getUid();
+
+
+    public View onCreateView(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.booking_history);;
+        CustomListAdapter whatever = new CustomListAdapter(this, locations, inTime, outTime);
+        listView = (ListView)findViewById(R.id.listViewId);
+        listView.setAdapter(whatever);
+
+
+
+
+        uid = auth.getInstance().getCurrentUser().getUid();
 
     locationValue = user.getSelectedLocation();
 
@@ -43,9 +59,15 @@ public class bookingHistory extends Fragment {
     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            bookingHistoryObject bookingHistoryObject = dataSnapshot.getValue(bookingHistoryObject.class);
-            User user = dataSnapshot.getValue(User.class);
-          //  bookingHistoryObject.locationValue = user.getSelectedLocation();
+           // bookingHistoryObject bookingHistoryObject = dataSnapshot.getValue(bookingHistoryObject.class);
+
+            for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                bookingHistoryObject obj = ds.getValue(bookingHistoryObject.class);
+                locations.add(obj.getLocationValue());
+                inTime.add(obj.getInTime());
+                outTime.add(obj.getOutTime());
+            }
+
         }
 
         @Override
@@ -53,12 +75,12 @@ public class bookingHistory extends Fragment {
 
         }
     });
-    String bookingId = databaseReference.push().getKey();
-   // bookingHistoryObject obj = new bookingHistoryObject(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),locationValue);
-   // databaseReference.child(bookingId).setValue(obj);
 
 
 
 return view;
     }
+
+
 }
+
