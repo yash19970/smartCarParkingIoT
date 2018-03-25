@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,9 +35,9 @@ public class bookingHistory extends Fragment {
     private String locationValue;
     private User user;
     private ListView listView;
-    private ArrayList<String> locations;
-    private ArrayList<String> inTime;
-    private ArrayList<String> outTime;
+    private ArrayList<String> locations = new ArrayList<String> ();;
+    private ArrayList<String> inTime = new ArrayList<String> ();
+    private ArrayList<String> outTime = new ArrayList<String> ();;
     View view;
 
 
@@ -44,26 +45,30 @@ public class bookingHistory extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.booking_history, container, false);
-        CustomListAdapter whatever = new CustomListAdapter(getActivity(), locations, inTime, outTime);
+
         listView = (ListView)view.findViewById(R.id.listViewId);
-        listView = (ListView)view.findViewById(R.id.listViewId);
-        listView.setAdapter(whatever);
+
         uid = auth.getInstance().getCurrentUser().getUid();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(uid).child("bookingHistories");
+        databaseReference = FirebaseDatabase.getInstance().getReference("User").child(uid).child("booking history");
 
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // bookingHistoryObject bookingHistoryObject = dataSnapshot.getValue(bookingHistoryObject.class);
-
+                Toast.makeText(getActivity(),"heyyyy",Toast.LENGTH_SHORT).show();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     bookingHistoryObject obj = ds.getValue(bookingHistoryObject.class);
+                    Toast.makeText(getActivity(),obj.getOutTime()+ obj.getInTime()+obj.getLocationValue(),Toast.LENGTH_SHORT).show();
+                            inTime.add(obj.getInTime());
                     locations.add(obj.getLocationValue());
-                    inTime.add(obj.getInTime());
                     outTime.add(obj.getOutTime());
                 }
+                Toast.makeText(getActivity(),"adios",Toast.LENGTH_SHORT).show();
+                CustomListAdapter whatever = new CustomListAdapter(getActivity(), locations, inTime, outTime);
+
+                listView.setAdapter(whatever);
 
             }
 
@@ -72,6 +77,8 @@ public class bookingHistory extends Fragment {
 
             }
         });
+
+
 
         return view;
 

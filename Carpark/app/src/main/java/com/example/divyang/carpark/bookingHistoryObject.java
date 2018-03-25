@@ -13,9 +13,8 @@ public  class bookingHistoryObject {
 
 
         private String inTime;
-        private String outTime;
         private String locationValue;
-
+        private String outTime;
 
         // empty constructor
         public bookingHistoryObject() {
