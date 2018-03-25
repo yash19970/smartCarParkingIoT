@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -33,14 +33,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hello"
-            android:textSize="18sp" />
+            android:textSize="9sp" />
 
         <TextView
             android:id="@+id/tv2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="bro"
-            android:textSize="18sp" />
+            android:textSize="9sp" />
     </LinearLayout>
 
 </LinearLayout>
