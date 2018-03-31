@@ -3,6 +3,12 @@ import time
 import pyrebase
 from time import gmtime, strftime
 from multiprocessing import Process
+import urllib.request as urllib2
+import http.cookiejar as cookielib
+from getpass import getpass
+import sys
+import os
+from stat import *
 config = {
       # "apiKey": "AIzaSyAOS1FZNefinLfsyhOi5wo8E9O9DRClJqY",
       # "authDomain": "carpark-c131a.firebaseapp.com",
@@ -20,48 +26,87 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 user = auth.sign_in_with_email_and_password("divyang.duhan07@gmail.com", "divyang001")  
 db = firebase.database()
-ard = serial.Serial("/dev/ttyACM1",9600)
+ard = serial.Serial("/dev/ttyACM0",9600)
 def arduinoData():
     while (1):
-        if(ard.readline()):
-            if ard.readline().decode('ascii'):
-                x =ard.readline().decode('ascii')
-                a = x.split(" ")
-                sensorNo = a[0]
-                print(sensorNo)
-                print ("carparked")
+        data = db.child("Location").child("Phoenix MarketCity, Velacherry").child("Sensor").child("1").get().val()
+        #print(data["status"])
+        #print(data["booked"])
+        t_end = time.time() + 10
+        flag=0;
+        if(data["status"] ==  "no" and data["booked"] == "no" ):
+            print("in")
+            print(time.time())
+            #print(t_end)
+            while time.time() < t_end:
+                print(t_end)
+                try:
+                    if ard.readline().decode('ascii'):
+                        x =ard.readline().decode('ascii')
+                        a = x.split(" ")
+                        sensorNo = a[0]
+                        flag=1; 
+                except Exception as e:
+                    print("error occured:")
+            if(flag ==1):
+                sendMesg()
+                print("send mg")
+            print("out")
+                        #print(data.child("1").child("booked").get().val())
                 # break     
-        inTime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-        archer = {"sensorNo": sensorNo, "carNo": "122", "status":"1", "inTime":inTime}
-        db.child("agents").push(archer, user['idToken'])
-        print(db.child("parking").get(user['idToken']).val())
+                #print(db.child("parking").get(user['idToken']).val())
 
-def firebaseData():
-    def stream_handler(message):
-        # print(message["event"]) # put
-        #print(message["path"]) # /-K7yGTTEp7O549EzTYtI
-        #print(message["data"]) # {'title': 'Pyrebase', "body": "etc..."}
-        x = message["path"].split("/")
-        if(x[1] != ""):
-            #print(type(x[1]))
-            ard.write(x[1].encode())  
-    my_stream = db.child("sensor").stream(stream_handler)
+
+
+
+def sendMesg():
+    message = "loda lag gaya bc"
+    number = "7010529344"    
+    username = "7010529344"
+    passwd = "0317"
+
+    message = "+".join(message.split(' '))
+
+ #LOGIN INTO WAY2SMS.
+    url ='http://site24.way2sms.com/Login1.action?'
+    data = 'username='+username+'&password='+passwd+'&Submit=Sign+in'
+
+ #COOKIES
+
+    cj= cookielib.CookieJar()
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
+ #ADDING DETAILS
+    opener.addheaders=[('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120')]
+    try:
+        usock =opener.open(url, data.encode())
+    except IOError:
+        print("error")
+        #return()
+
+    jession_id =str(cj).split('~')[1].split(' ')[0]
+    send_sms_url = 'http://site24.way2sms.com/smstoss.action?'
+    send_sms_data = 'ssaction=ss&Token='+jession_id+'&mobile='+number+'&message='+message+'&msgLen=136'
+    opener.addheaders=[('Referer', 'http://site25.way2sms.com/sendSMS?Token='+jession_id)]
+    try:
+        sms_sent_page = opener.open(send_sms_url,send_sms_data.encode())
+    except IOError:
+        print("error")
+
+    print("success") 
+
+
+
+
 
 
 if __name__ == '__main__':
-  p1 = Process(target=arduinoData)
-  p1.start()
-  p2 = Process(target=firebaseData)
-  p2.start()
-  p1.join()
-  p2.join()
-
+  arduinoData()
 
 
 #auth=OAuthHandler(cKey,cSecret)
 #auth.set_access_token(aToken,aSecret)
 #twitterStream=Stream(auth,listener())
 #twitterStream.filter(track=["car"])
-
 
 
