@@ -47,12 +47,11 @@ public class MainActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_main, container, false);
-        enter = (Button) view.findViewById(R.id.enter);
+     //   enter = (Button) view.findViewById(R.id.enter);
         book = (Button) view.findViewById(R.id.book);
-        logout = (Button) view.findViewById(R.id.logout);
+    //    logout = (Button) view.findViewById(R.id.logout);
         auth = FirebaseAuth.getInstance();
         parked = (Button) view.findViewById(R.id.parked);
-        exit = (Button) view.findViewById(R.id.exit);
         number = (TextView) view.findViewById(R.id.number1);
         status = (TextView) view.findViewById(R.id.status);
         locationName = getArguments().getString("locationName");
@@ -60,59 +59,59 @@ public class MainActivity extends Fragment {
         locationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName).child("TotalSlots");
         sensorlocationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
         mainReference = FirebaseDatabase.getInstance().getReference();
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                auth.signOut();
-                startActivity(new Intent(getActivity(), loginActivity.class));
-                getActivity().finish();
-            }
-        });
-
-
+//
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                auth.signOut();
+//                startActivity(new Intent(getActivity(), loginActivity.class));
+//                getActivity().finish();
+//            }
+//        });
 
 
-        enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                carParked(locationreference);
-
-            }
-        });
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                locationreference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        String slots = dataSnapshot.getValue().toString();
-                        int slot;
-                        slot = Integer.parseInt(slots);
-                        if (slot == 0) {
-                            Toast.makeText(getActivity(), "Empty", Toast.LENGTH_LONG).show();
-                        } else {
-                            slot--;
-                            slots = String.valueOf(slot);
-                            locationreference.setValue(slots);
-                        }
-
-                    }
-
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-            }
-        });
+//
+//        enter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                carParked(locationreference);
+//
+//            }
+//        });
+//        exit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                locationreference.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                        String slots = dataSnapshot.getValue().toString();
+//                        int slot;
+//                        slot = Integer.parseInt(slots);
+//                        if (slot == 0) {
+//                            Toast.makeText(getActivity(), "Empty", Toast.LENGTH_LONG).show();
+//                        } else {
+//                            slot--;
+//                            slots = String.valueOf(slot);
+//                            locationreference.setValue(slots);
+//                        }
+//
+//                    }
+//
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//
+//
+//            }
+//        });
         locationreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -91,39 +91,6 @@ public class qrGeneration extends AppCompatActivity {
                             }
                         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 setAlarm(60,locationName,ds.getKey());
                 loadQrCode(qrcode, currentFirebaseUser.getUid()+"/"+locationName+"/"+ds.getKey());
                 Toast.makeText(getApplicationContext(), "booked", Toast.LENGTH_SHORT).show();

@@ -41,44 +41,13 @@
         android:id="@+id/status"
         android:textSize="20dp"
         />
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/number"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:id="@+id/Minilayout"
-        >
-    <Button
-        android:id="@+id/enter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/enter"
-        android:text="Exit"
-        android:id="@+id/exit"
-        />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Minilayout"
-        android:layout_centerHorizontal="true"
-        >
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/parked"
-            android:text="logout"
-            android:id="@+id/logout"
-            />
-    </RelativeLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    >
     <Button
         android:id="@+id/book"
         android:layout_width="wrap_content"
@@ -88,7 +57,9 @@
         android:layout_toStartOf="@+id/parked"
         android:background="@drawable/custombutton"
         android:text="Park Later"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_weight="1"
+        />
 
     <Button
         android:id="@+id/parked"
@@ -100,7 +71,10 @@
         android:background="@drawable/custombutton"
         android:layout_marginLeft="2dp"
         android:text="Park Now"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:layout_weight="1"
+        />
+</LinearLayout>
 
 </RelativeLayout>
     <fragment

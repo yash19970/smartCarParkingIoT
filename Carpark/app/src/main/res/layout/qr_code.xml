@@ -6,13 +6,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
         />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/qrcode"
+        android:layout_above="@+id/cancel"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:text="Cancel Reservation"
+        android:visibility="visible"
+        android:background="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:id="@+id/cancel"
         />
 </RelativeLayout>

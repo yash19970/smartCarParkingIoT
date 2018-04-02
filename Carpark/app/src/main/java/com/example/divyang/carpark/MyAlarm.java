@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,8 +18,9 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class MyAlarm extends BroadcastReceiver {
-
-    private DatabaseReference reference,mainReference;
+    private String uid;;
+    private FirebaseAuth auth;
+    private DatabaseReference reference,mainReference,userreference;
     String[] str = new String[2];
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -29,7 +31,8 @@ public class MyAlarm extends BroadcastReceiver {
            str = bundle.getStringArray("data");
         mainReference = FirebaseDatabase.getInstance().getReference().child("Location").child(str[0]);
         Toast.makeText(context, str[0], Toast.LENGTH_LONG).show();
-
+        uid = auth.getInstance().getCurrentUser().getUid();
+        userreference = FirebaseDatabase.getInstance().getReference().child("User").child(uid).child("active_booking");
         mainReference.child("Sensor").child(str[1]).child("booked").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -37,6 +40,19 @@ public class MyAlarm extends BroadcastReceiver {
                 if( dataSnapshot.getValue().toString().equals("no"))
                 {   Toast.makeText(context, "in if", Toast.LENGTH_LONG).show();
                     mainReference.child("Sensor").child(str[1]).child("status").setValue("no");
+                    userreference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            userreference.setValue(false);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 }
             }
             @Override

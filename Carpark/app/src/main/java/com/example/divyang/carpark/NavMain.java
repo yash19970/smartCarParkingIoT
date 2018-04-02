@@ -68,6 +68,11 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
 
                 title = "profile";
                 break;
+            case 4:
+            Bundle bundle5 = new Bundle();
+            fragment = new ServicePage();
+            title = "booking_history";
+            break;
 
             default:
                 break;
