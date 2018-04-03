@@ -106,7 +106,7 @@ public class qrGeneration extends AppCompatActivity {
             }
         });
     }
-    private void loadQrCode(ImageView qrcode, String randomstring) {
+    public void loadQrCode(ImageView qrcode, String randomstring) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(randomstring, BarcodeFormat.QR_CODE, 200, 200);
