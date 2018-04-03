@@ -31,9 +31,11 @@ import java.util.Map;
 
 public class SearchPage extends AppCompatActivity {
 
-    private DatabaseReference reference, reference2;
+    private DatabaseReference reference, reference2,userreference;
     private AutoCompleteTextView actv;
+    private FirebaseAuth auth;
     String  locationName;
+    String uid;
 
 
     @Override
@@ -105,6 +107,7 @@ public class SearchPage extends AppCompatActivity {
             {
                 locationName= (String) parent.getItemAtPosition(position);//locationName
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
                 reference2 = FirebaseDatabase.getInstance().getReference("User").child(userId).child("SelectedLocation");
                 reference2.setValue(locationName);
                 bookingHistoryObject bookingHistoryObject = new bookingHistoryObject();
