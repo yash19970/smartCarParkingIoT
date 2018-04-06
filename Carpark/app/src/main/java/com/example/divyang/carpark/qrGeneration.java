@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ public class qrGeneration extends AppCompatActivity {
     private DatabaseReference reference,mainreference;
     String locationName;
     private FirebaseAuth auth;
+    TextView locations;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class qrGeneration extends AppCompatActivity {
         locationName = i.getStringExtra("locationName");
         reference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
         mainreference = FirebaseDatabase.getInstance().getReference().child("User");
-
+        locations = (TextView) findViewById(R.id.locations);
         reference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -55,6 +57,7 @@ public class qrGeneration extends AppCompatActivity {
                          Long tsLong = System.currentTimeMillis() / 1000;
                         String ts = tsLong.toString();
                         reference.child("Sensor").child(ds.getKey()).child("status").setValue("yes");
+                        locations.setText("Location: "+locationName+"\n\n"+"Slot no: "+ds.getKey());
                         reference.child("TotalSlots").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
