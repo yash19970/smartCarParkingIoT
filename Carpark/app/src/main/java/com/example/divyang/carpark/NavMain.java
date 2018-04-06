@@ -65,6 +65,7 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
 
             case 3:
                 Bundle bundle4 = new Bundle();
+                fragment = new Profile();
 
                 title = "profile";
                 break;
