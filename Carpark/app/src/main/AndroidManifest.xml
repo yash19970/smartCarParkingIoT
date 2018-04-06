@@ -45,7 +45,7 @@
         <activity android:name=".qrGeneration"></activity>
         <activity android:name=".SignUp"></activity>
         <activity android:name=".SearchPage"></activity>
-        <activity android:name=".ConfirmationPage"></activity>
+        <activity android:name=".ConfirmationPage"  android:noHistory="true"></activity>
 
         <receiver
             android:name=".MyAlarm"

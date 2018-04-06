@@ -38,11 +38,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends Fragment {
     private Button enter,exit,book,parked,logout;
-    private DatabaseReference locationreference,mainReference,sensorlocationreference;
+    private DatabaseReference locationreference,mainReference,sensorlocationreference,userreference;
     private FirebaseAuth auth;
-    private TextView number,status;
+    private TextView number,status,locations;
+    private boolean reserved = false;
     View view;
     String locationName;
+    String uid;
+    int slot;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,10 +55,13 @@ public class MainActivity extends Fragment {
     //    logout = (Button) view.findViewById(R.id.logout);
         auth = FirebaseAuth.getInstance();
         parked = (Button) view.findViewById(R.id.parked);
+        uid = auth.getCurrentUser().getUid();
         number = (TextView) view.findViewById(R.id.number1);
         status = (TextView) view.findViewById(R.id.status);
         locationName = getArguments().getString("locationName");
-
+        locations = (TextView) view.findViewById(R.id.location);
+        userreference = FirebaseDatabase.getInstance().getReference().child("User").child(uid).child("active_booking");
+        locations.setText(locationName);
         locationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName).child("TotalSlots");
         sensorlocationreference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
         mainReference = FirebaseDatabase.getInstance().getReference();
@@ -112,22 +118,35 @@ public class MainActivity extends Fragment {
 //
 //            }
 //        });
+
+        userreference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               // Toast.makeText(getActivity(),"this is getting called",Toast.LENGTH_SHORT).show();
+                reserved = dataSnapshot.getValue(Boolean.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         locationreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String slots = dataSnapshot.getValue().toString();
-                int slot;
                 slot = Integer.parseInt(slots);
                 number.setText(slots);
                 if (slot == 0) {
                     status.setText("FULL");
-                    number.setTextColor(Color.RED);
-                    status.setTextColor(Color.RED);
+                    number.setTextColor(Color.parseColor("#808080"));
+                    status.setTextColor(Color.parseColor("#808080"));
                 } else {
                     status.setText("Available");
-                    number.setTextColor(Color.GREEN);
-                    status.setTextColor(Color.GREEN);
+                    number.setTextColor(Color.parseColor("#3F51B5"));
+                    status.setTextColor(Color.parseColor("#3F51B5"));
                 }
             }
 
@@ -141,13 +160,26 @@ public class MainActivity extends Fragment {
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] str = new String[2];
-                str[0] = locationName;
-                Bundle bundle = new Bundle();
-                bundle.putStringArray("abc",str);
-                Intent intent = new Intent(getActivity(),ConfirmationPage.class);
-                intent.putExtra("data",bundle);
-                startActivity(intent);
+
+                        if (slot == 0) {
+                            Toast.makeText(getActivity(),"Sorry parking slots are not available",Toast.LENGTH_SHORT).show();
+                        } else {
+                 //           Toast.makeText(getActivity(),"HEllo"+reserved,Toast.LENGTH_SHORT).show();
+                            if(!reserved){String[] str = new String[2];
+                            str[0] = locationName;
+                            Bundle bundle = new Bundle();
+                            bundle.putStringArray("abc",str);
+                            Intent intent = new Intent(getActivity(),ConfirmationPage.class);
+                            intent.putExtra("data",bundle);
+                            startActivity(intent);}
+                            else{
+                                Toast.makeText(getActivity(),"You cannot reserve/park more than 1 parking slot",Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+
+
 
             }
         });

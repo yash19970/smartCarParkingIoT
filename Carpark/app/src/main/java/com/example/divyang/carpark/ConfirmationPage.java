@@ -26,7 +26,7 @@ public class ConfirmationPage extends AppCompatActivity {
 
         str = bundle.getStringArray("abc");
         location = (TextView)findViewById(R.id.location);
-        slot = (TextView) findViewById(R.id.slot);
+
         confirm = (Button)  findViewById(R.id.confirm);
         location.setText(str[0]);
 
