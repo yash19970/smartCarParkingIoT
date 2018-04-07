@@ -38,8 +38,8 @@ public class CustomListAdapter extends ArrayAdapter {
 
         //this code gets references to objects in the listview_row.xml file
         TextView locationTextField = (TextView) rowView.findViewById(R.id.tv1);
-        TextView inTimeTextField = (TextView) rowView.findViewById(R.id.tv3);
-        TextView outTimeTextField = (TextView) rowView.findViewById(R.id.tv2);
+        TextView inTimeTextField = (TextView) rowView.findViewById(R.id.tv2);
+        TextView outTimeTextField = (TextView) rowView.findViewById(R.id.tv3);
         //this code sets the values of the objects to values from the arrays
         locationTextField.setText(location.get(position));
         inTimeTextField.setText(inTime.get(position));

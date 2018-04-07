@@ -57,15 +57,15 @@ public class bookingHistory extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // bookingHistoryObject bookingHistoryObject = dataSnapshot.getValue(bookingHistoryObject.class);
-                Toast.makeText(getActivity(),"heyyyy",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"heyyyy",Toast.LENGTH_SHORT).show();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     bookingHistoryObject obj = ds.getValue(bookingHistoryObject.class);
-                    Toast.makeText(getActivity(),obj.getOutTime()+ obj.getInTime()+obj.getLocationValue(),Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity(),obj.getOutTime()+ obj.getInTime()+obj.getLocationValue(),Toast.LENGTH_SHORT).show();
                             inTime.add(obj.getInTime());
                     locations.add(obj.getLocationValue());
                     outTime.add(obj.getOutTime());
                 }
-                Toast.makeText(getActivity(),"adios",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(),"adios",Toast.LENGTH_SHORT).show();
                 CustomListAdapter whatever = new CustomListAdapter(getActivity(), locations, inTime, outTime);
 
                 listView.setAdapter(whatever);
