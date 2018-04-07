@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,10 +20,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
-    DatabaseReference firebaseDatabase,mainreference,reference;
+    DatabaseReference firebaseDatabase,mainreference,reference,bookingHistoryReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
             else{
                 Toast.makeText(this,result.getContents(),Toast.LENGTH_LONG).show();
                 final String[] scannedString = result.getContents().toString().split("/");
+                String uid = scannedString[0];
                 firebaseDatabase = FirebaseDatabase.getInstance().getReference().child("User");
                 mainreference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[1]).child("Sensor");
                 reference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[1]).child("TotalSlots");
+                bookingHistoryReference = FirebaseDatabase.getInstance().getReference().child("User").child(uid).child("booking History");
 
 
                 firebaseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -70,11 +75,17 @@ public class MainActivity extends AppCompatActivity {
                         {
                             if(ds.getKey().equals(scannedString[0])){
                                 User user = ds.getValue(User.class);
-                                if(user.isActive_booking() && !user.isActive_parking())
-                                firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(true);
+                                if(user.isActive_booking() && !user.isActive_parking()) {
+                                    firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(true);
+                                    Date date = new Date(System.currentTimeMillis());
+                                    bookingHistoryReference.child(ds.getKey()).child("outTime").setValue(date.toString());
+                                }
+
                                 if(user.isActive_booking() && user.isActive_parking()){
                                     firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(false);
                                     firebaseDatabase.child(ds.getKey()).child("active_booking").setValue(false);
+                                    Date date = new Date(System.currentTimeMillis());
+                                    bookingHistoryReference.child(ds.getKey()).child("outTime").setValue(date.toString());
                                 }
 break;
                             }
