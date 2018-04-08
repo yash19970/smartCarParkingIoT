@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * Created by divya on 22-01-2018.
  */
@@ -80,7 +82,11 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
                 fragment = new MapsActivity();
                 title = "profile";
                 break;
-
+            case 6:
+                title = "Logout";
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(NavMain.this,loginActivity.class);
+                startActivity(intent);
             default:
                 break;
         }
