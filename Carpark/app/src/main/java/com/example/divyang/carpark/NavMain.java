@@ -55,26 +55,25 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
                 break;
             case 1:
                 Bundle bundle2 = new Bundle();
-                fragment = new bookingHistory();
-                title = "booking_history";
-                break;
-
-            case 2:
-                Bundle bundle3 = new Bundle();
                 fragment = new locateParking();
                 title = "locate";
                 break;
 
+            case 2:
+                Bundle bundle3 = new Bundle();
+                //profile here!
+                fragment = new Profile();
+                title = "profile";
+                break;
+
             case 3:
                 Bundle bundle4 = new Bundle();
-                fragment = new Profile();
-
-                title = "profile";
+                fragment = new ServicePage();
+                title = "Service";
                 break;
             case 4:
             Bundle bundle5 = new Bundle();
-            fragment = new ServicePage();
-            title = "booking_history";
+
             break;
 
 

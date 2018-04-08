@@ -16,14 +16,22 @@ public class User {
     public bookingHistoryObject bookingHistories;
 
     public String selectedLocation;
+    public String allocatedSlot;
 
     public User(){
 
     }
 
 
+    public String getAllocatedSlot() {
+        return allocatedSlot;
+    }
 
-    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, bookingHistoryObject bookingHistories,String selectedLocation) {
+    public void setAllocatedSlot(String allocatedSlot) {
+        this.allocatedSlot = allocatedSlot;
+    }
+
+    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, bookingHistoryObject bookingHistories, String selectedLocation, String allocatedSlot) {
 
         this.userId = userId;
         this.username = username;
@@ -32,6 +40,7 @@ public class User {
         this.active_parking = active_parking;
         this.bookingHistories = bookingHistories;
         this.selectedLocation = selectedLocation;
+        this.allocatedSlot = allocatedSlot;
     }
 
 
@@ -90,4 +99,5 @@ public class User {
     public void setSelectedLocation(String selectedLocation) {
         this.selectedLocation = selectedLocation;
     }
+
 }

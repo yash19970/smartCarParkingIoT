@@ -1,15 +1,10 @@
 package com.example.divyang.carpark;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +23,12 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 /**
- * Created by divya on 03-03-2018.
+ * Created by divya on 08-04-2018.
  */
 
-public class qrGeneration extends AppCompatActivity {
+public class GetMyQr extends AppCompatActivity {
+
+
     ImageView qrcode;
     private DatabaseReference reference,mainreference;
     String locationName;
@@ -41,27 +38,28 @@ public class qrGeneration extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.qr_code);
-        qrcode = (ImageView) findViewById(R.id.qrcode);
+        setContentView(R.layout.qr_code_park);
+        qrcode = (ImageView) findViewById(R.id.getmyqr);
         auth = FirebaseAuth.getInstance();
-        final String uid = auth.getCurrentUser().getUid();
-       final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         Intent i = getIntent();
         locationName = i.getStringExtra("locationName");
-        reference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
+        final String[] scannedString = locationName.split("/");
+        reference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[0]);
         mainreference = FirebaseDatabase.getInstance().getReference().child("User");
         locations = (TextView) findViewById(R.id.locations);
 
-        //If cancel reservation button is clicked, send it to that page
-        final Button cancelReservationButton = (Button)findViewById(R.id.cancel);
-        cancelReservationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent;
-                intent = new Intent(qrGeneration.this,cancelReservation.class);
-                startActivity(intent);
-            }
-        });
+
+
+
+
+
+
+
+
+
+
+
 
 
         reference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,12 +67,11 @@ public class qrGeneration extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Sensor sensor = ds.getValue(Sensor.class);
-                    if(sensor.getBooked().equals("no") && sensor.getStatus().equals("no")){
-                         Long tsLong = System.currentTimeMillis() / 1000;
+                    if(ds.getKey().equals(scannedString[1]) ){
+                        Long tsLong = System.currentTimeMillis() / 1000;
                         String ts = tsLong.toString();
                         reference.child("Sensor").child(ds.getKey()).child("status").setValue("yes");
-                        locations.setText("Location: "+locationName+"\n\n"+"Slot no: "+ds.getKey());
-                        mainreference.child(uid).child("allocated slot").setValue(ds.getKey());
+                        locations.setText("Location: "+scannedString[0]+"\n\n"+"Slot no: "+ds.getKey());
                         reference.child("TotalSlots").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -98,23 +95,21 @@ public class qrGeneration extends AppCompatActivity {
                                 for(DataSnapshot ds : dataSnapshot.getChildren())
                                 {
                                     if(ds.getKey().equals(auth.getCurrentUser().getUid())){
-                                            mainreference.child(ds.getKey()).child("active_booking").setValue(true);
-                                            break;
-                                        }
+                                        mainreference.child(ds.getKey()).child("active_booking").setValue(true);
+                                        break;
+                                    }
 
                                 }
 
-                                }
+                            }
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
 
                             }
                         });
-
-                setAlarm(60,locationName,ds.getKey());
-                loadQrCode(qrcode, currentFirebaseUser.getUid()+"/"+locationName+"/"+ds.getKey());
-                Toast.makeText(getApplicationContext(), "booked", Toast.LENGTH_SHORT).show();
-                break;
+                        loadQrCode(qrcode, currentFirebaseUser.getUid()+"/"+scannedString[0]+"/"+ds.getKey());
+                        Toast.makeText(getApplicationContext(), "booked", Toast.LENGTH_SHORT).show();
+                        break;
 
                     }
                 }
@@ -137,19 +132,29 @@ public class qrGeneration extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void setAlarm(int i,String locationName,String key) {
-        AlarmManager manager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(qrGeneration.this,MyAlarm.class);
-        String[] str =  new String[2];
-        str[0] = locationName;
-        str[1]= key;
-        Bundle bundle = new Bundle();
-        bundle.putStringArray("data",str);
-        intent.putExtra("abc",bundle);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(qrGeneration.this,0,intent,0);
-        manager.set(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()
-                + (i * 1000),pendingIntent);
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
-
