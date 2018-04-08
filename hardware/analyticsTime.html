@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
+    <script type="text/javascript">
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      $(document).ready(function() {
+      $.ajax({
+        type: "GET",
+        url: "test.csv",
+        dataType: "csv",
+        success: function(data) {drawChart(data);}
+       });
+    });
+      function drawChart(data) {
+        console.log(data)
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Time Slots'],
+          ['Morning: 4-12',     11],
+          ['Afternoon: 12-16', 10],
+          ['Evening: 17-20',  4],
+          ['Night: 21-3', 2],
+        ]);
+
+        var options = {
+          title: 'Daily Booking Based on Timings'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
