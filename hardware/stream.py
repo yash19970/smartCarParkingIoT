@@ -1,7 +1,7 @@
 import serial
 import time
 import pyrebase
-from time import gmtime, strftime	
+from time import gmtime, strftime    
 ard = serial.Serial("/dev/ttyACM0",9600)
 config = {
     "apiKey": "AIzaSyD01mwCYWJ4x-grwrAhZh2fSesfToH_QVA",
@@ -20,14 +20,24 @@ db = firebase.database()
 def stream_handler(message):
     # print(message["event"]) # put
     #print(message["path"]) # /-K7yGTTEp7O549EzTYtI
-    print(message["data"]) # {'title': 'Pyrebase', "body": "etc..."}
+    #print(message["data"]) # {'title': 'Pyrebase', "body": "etc..."}
     print(message["path"])
     x = message["path"].split("/")
+    print(x)
+    flg=0
     if(x[1] != ""):
-    	#ard.write(x[1].encode())
-    	#print(x[1])
-    	ard.write(x[1].encode())
-    	ard.write((message["data"].encode()))
+        #ard.write(x[1].encode())
+        if(x[2] == "booked" and message["data"] == "yes"):
+            print("in")
+            flg =1
+            y =  "yes1"
+        if(flg == 1):
+            ard.write(y.encode())
+            print(y)
+        else:
+            ard.write(x[1].encode())
+            ard.write((message["data"].encode()))
+        print(x[1])
 
 
 my_stream = db.child("Location").child("Phoenix MarketCity, Velacherry").child("Sensor").stream(stream_handler)

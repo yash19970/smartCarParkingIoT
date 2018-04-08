@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['User', 'Weekend', 'weekday', 'No Of Bookings'],
+          ['user1', 1, 0, 1],
+          ['user2', 2, 1, 3],
+          ['user3', 1, 0, 1],
+          ['user4', 4, 2, 6]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'User Information',
+            subtitle: 'Weekend, weekday, and Bookings: 2018-2019',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+  </head>
+  <body>
+    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+  </body>
+</html>

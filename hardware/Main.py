@@ -45,11 +45,12 @@ def arduinoData():
                         x =ard.readline().decode('ascii')
                         a = x.split(" ")
                         sensorNo = a[0]
+                        print(sensorNo)
                         flag=1; 
                 except Exception as e:
                     print("error occured:")
             if(flag ==1):
-                sendMesg()
+                sendMesg(sensorNo)
                 print("send mg")
             print("out")
                         #print(data.child("1").child("booked").get().val())
@@ -59,8 +60,8 @@ def arduinoData():
 
 
 
-def sendMesg():
-    message = "loda lag gaya bc"
+def sendMesg(sensorNo):
+    message = "Hey Manager. We have some Problem in Parking area: " + sensorNo
     number = "7010529344"    
     username = "7010529344"
     passwd = "0317"

@@ -7,6 +7,8 @@ int echoPin2 = 2;
 int trigPin = 9;
 int ledPin = 13;
 int ledPin2 = 8;
+int motorPin1 =5;
+int motorPin2 =6;
 void setup() {
 pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
 pinMode(echoPin, INPUT); // Sets the echoPin as an Input
@@ -14,6 +16,9 @@ pinMode(ledPin,OUTPUT);
 pinMode(ledPin2, OUTPUT);
 pinMode(trigPin2, OUTPUT);
 pinMode(echoPin2, INPUT);
+pinMode(motorPin1, OUTPUT); 
+pinMode(motorPin2, OUTPUT); 
+
 Serial.begin(9600); // Starts the serial communication
 }
 int distance2 , distance1;
@@ -21,7 +26,6 @@ int flag1=0, flag2=0;
 int checkFlag1=0,checkFlag2=0;
 void loop() {
 distance1 = SonarSensor(trigPin,echoPin);
-
 if(distance1 <=1){
 Serial.print("1 ");
 Serial.println(distance1);
@@ -68,12 +72,17 @@ readString.trim();
       Serial.println("switching on");
       String readString1= "";
       digitalWrite(ledPin, HIGH);
+      //rotateLeft(250,5000);
       checkFlag1=1;
       delay(2000);
     }else if(readString == "1no" || readString == "1no1no" ){
       digitalWrite(ledPin, LOW);
+      rotateLeft(250,5000);
       checkFlag1=0;
       delay(2000);
+    }else if(readString == "yes1"){
+      Serial.print("inside");
+      rotateLeft(250,5000);
     }
     // for sensor2
     if (readString == "2yes")
@@ -94,6 +103,13 @@ readString.trim();
 
 /*APPLY logic: if trigpin is 1 and distance is less than 4 then use sensor 1 else use sensor 2 */
 
+}
+
+void rotateLeft(int speedOfRotate, int length){
+  analogWrite(motorPin1, speedOfRotate); //rotates motor
+  digitalWrite(motorPin2, LOW);    // set the Pin motorPin2 LOW
+  delay(length); //waits
+  digitalWrite(motorPin1, LOW);    // set the Pin motorPin1 LOW
 }
 
 
