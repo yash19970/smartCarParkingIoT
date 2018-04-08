@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                 if(user.isActive_booking() && !user.isActive_parking()) {
                                     firebaseDatabase.child(ds.getKey()).child("active_parking").setValue(true);
                                     Date date = new Date(System.currentTimeMillis());
-                                    bookingHistoryReference.child(ds.getKey()).child("outTime").setValue(date.toString());
+                                    bookingHistoryReference.child(ds.getKey()).child("inTime").setValue(date.toString());
                                 }
 
                                 if(user.isActive_booking() && user.isActive_parking()){
