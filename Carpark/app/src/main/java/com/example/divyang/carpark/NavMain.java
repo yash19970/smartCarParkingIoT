@@ -90,7 +90,9 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
                 title = "Logout";
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(NavMain.this,loginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                break;
 
             case 7:
                 title = "GetMyQr";

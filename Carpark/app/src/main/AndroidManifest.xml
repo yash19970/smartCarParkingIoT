@@ -42,11 +42,11 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".qrGeneration"></activity>
+        <activity android:name=".qrGeneration" android:noHistory="true"></activity>
         <activity android:name=".SignUp"></activity>
         <activity android:name=".SearchPage"></activity>
         <activity android:name=".ConfirmationPage"  android:noHistory="true"></activity>
-        <activity android:name=".cancelReservation"></activity>
+        <activity android:name=".cancelReservation" android:noHistory="true"></activity>
 
         <activity android:name=".qrGenerationPark"  android:noHistory="true"></activity>
         <activity android:name=".GetMyQr"  android:noHistory="true"></activity>

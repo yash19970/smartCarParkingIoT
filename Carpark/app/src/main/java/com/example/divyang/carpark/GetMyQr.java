@@ -48,10 +48,12 @@ public class GetMyQr extends AppCompatActivity {
         locations = (TextView) findViewById(R.id.locations);
 
         mainreference.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //uid = auth.getCurrentUser().getUid();
                 User user = dataSnapshot.getValue(User.class);
-                Toast.makeText(getApplicationContext(),user.getUsername()+user.getSelectedLocation(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),user.getUsername()+user.getSelectedLocation(),Toast.LENGTH_LONG).show();
                 if(!user.getActive_booking()){
                     locations.setText("SORRY NO ACTIVE QR AVAILABLE");
                 }
