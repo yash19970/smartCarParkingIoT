@@ -44,7 +44,7 @@ public class FragmentDrawer extends Fragment {
     public static List<DataMenuItems> getData() {
         List<DataMenuItems> data = new ArrayList<>();
 
-        titles = new String[]{"Home","Locate","Profile","Bookings","ServicePage","Near By places","Logout"};
+        titles = new String[]{"Home","Locate","Profile","Bookings","ServicePage","Near By places","Logout","getmyQr"};
 
 
         // preparing navigation drawer items

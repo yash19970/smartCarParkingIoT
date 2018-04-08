@@ -50,7 +50,7 @@ public class cancelReservation extends AppCompatActivity{
                             {
                                 if(ds.getKey().equals(uid)){
                                     User user = ds.getValue(User.class);
-                                    String parkingSlot = user.getAllocatedSlot();
+                                    String parkingSlot = user.getAllocatedslot();
                                     String parkingLocation = user.getSelectedLocation();
                                     Toast.makeText(getApplicationContext(),parkingLocation+parkingSlot,Toast.LENGTH_LONG).show();
                                    // parkingSlotReference = FirebaseDatabase.getInstance().getReference().child("Location").child(parkingLocation).child("Sensor").child(parkingSlot);

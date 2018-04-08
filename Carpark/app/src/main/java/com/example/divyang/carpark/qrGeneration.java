@@ -33,7 +33,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class qrGeneration extends AppCompatActivity {
     ImageView qrcode;
-    private DatabaseReference reference,mainreference;
+    private DatabaseReference reference,mainreference,reference2;
     String locationName;
     private FirebaseAuth auth;
     TextView locations;
@@ -72,9 +72,14 @@ public class qrGeneration extends AppCompatActivity {
                     if(sensor.getBooked().equals("no") && sensor.getStatus().equals("no")){
                          Long tsLong = System.currentTimeMillis() / 1000;
                         String ts = tsLong.toString();
+                        String loc = "Phoenix MarketCity, Velacherry";
                         reference.child("Sensor").child(ds.getKey()).child("status").setValue("yes");
+                        reference2 = FirebaseDatabase.getInstance().getReference("User").child(auth.getCurrentUser().getUid()).child("SelectedLocation");
+                        reference2.setValue(loc);
+
+
                         locations.setText("Location: "+locationName+"\n\n"+"Slot no: "+ds.getKey());
-                        mainreference.child(uid).child("allocated slot").setValue(ds.getKey());
+                        mainreference.child(uid).child("allocatedslot").setValue(ds.getKey());
                         reference.child("TotalSlots").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {

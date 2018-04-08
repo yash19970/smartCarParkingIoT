@@ -34,85 +34,31 @@ public class GetMyQr extends AppCompatActivity {
     String locationName;
     private FirebaseAuth auth;
     TextView locations;
+    String uid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.qr_code_park);
+        setContentView(R.layout.get_my_qr);
         qrcode = (ImageView) findViewById(R.id.getmyqr);
         auth = FirebaseAuth.getInstance();
+        uid = auth.getCurrentUser().getUid();
         final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-        Intent i = getIntent();
-        locationName = i.getStringExtra("locationName");
-        final String[] scannedString = locationName.split("/");
-        reference = FirebaseDatabase.getInstance().getReference().child("Location").child(scannedString[0]);
-        mainreference = FirebaseDatabase.getInstance().getReference().child("User");
+        mainreference = FirebaseDatabase.getInstance().getReference().child("User").child(uid);
         locations = (TextView) findViewById(R.id.locations);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        reference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
+        mainreference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Sensor sensor = ds.getValue(Sensor.class);
-                    if(ds.getKey().equals(scannedString[1]) ){
-                        Long tsLong = System.currentTimeMillis() / 1000;
-                        String ts = tsLong.toString();
-                        reference.child("Sensor").child(ds.getKey()).child("status").setValue("yes");
-                        locations.setText("Location: "+scannedString[0]+"\n\n"+"Slot no: "+ds.getKey());
-                        reference.child("TotalSlots").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String slots = dataSnapshot.getValue().toString();
-                                int slot = Integer.parseInt(slots);
-                                slot--;
-                                reference.child("TotalSlots").setValue(String.valueOf(slot));
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                        mainreference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                for(DataSnapshot ds : dataSnapshot.getChildren())
-                                {
-                                    if(ds.getKey().equals(auth.getCurrentUser().getUid())){
-                                        mainreference.child(ds.getKey()).child("active_booking").setValue(true);
-                                        break;
-                                    }
-
-                                }
-
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                        loadQrCode(qrcode, currentFirebaseUser.getUid()+"/"+scannedString[0]+"/"+ds.getKey());
-                        Toast.makeText(getApplicationContext(), "booked", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    }
+                User user = dataSnapshot.getValue(User.class);
+                Toast.makeText(getApplicationContext(),user.getUsername()+user.getSelectedLocation(),Toast.LENGTH_LONG).show();
+                if(!user.getActive_booking()){
+                    locations.setText("SORRY NO ACTIVE QR AVAILABLE");
                 }
+                else{
+                    loadQrCode(qrcode,uid+"/"+user.getSelectedLocation()+"/"+user.getAllocatedslot());
+                }
+
             }
 
             @Override
@@ -120,6 +66,7 @@ public class GetMyQr extends AppCompatActivity {
 
             }
         });
+
     }
     public void loadQrCode(ImageView qrcode, String randomstring) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();

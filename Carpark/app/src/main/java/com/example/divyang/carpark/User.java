@@ -15,23 +15,30 @@ public class User {
     public Boolean active_parking;
     public bookingHistoryObject bookingHistories;
 
-    public String selectedLocation;
-    public String allocatedSlot;
+    private String SelectedLocation;
+    private String allocatedslot;
 
     public User(){
 
     }
 
-
-    public String getAllocatedSlot() {
-        return allocatedSlot;
+    public String getSelectedLocation() {
+        return SelectedLocation;
     }
 
-    public void setAllocatedSlot(String allocatedSlot) {
-        this.allocatedSlot = allocatedSlot;
+    public void setSelectedLocation(String SelectedLocation) {
+        this.SelectedLocation = SelectedLocation;
     }
 
-    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, bookingHistoryObject bookingHistories, String selectedLocation, String allocatedSlot) {
+    public String getAllocatedslot() {
+        return allocatedslot;
+    }
+
+    public void setAllocatedslot(String allocatedslot) {
+        this.allocatedslot = allocatedslot;
+    }
+
+    public User(String userId, String username, String email, Boolean active_booking, Boolean active_parking, bookingHistoryObject bookingHistories, String SelectedLocation, String allocatedslot) {
 
         this.userId = userId;
         this.username = username;
@@ -39,8 +46,8 @@ public class User {
         this.active_booking = active_booking;
         this.active_parking = active_parking;
         this.bookingHistories = bookingHistories;
-        this.selectedLocation = selectedLocation;
-        this.allocatedSlot = allocatedSlot;
+        this.SelectedLocation = SelectedLocation;
+        this.allocatedslot = allocatedslot;
     }
 
 
@@ -90,14 +97,6 @@ public class User {
 
     public void setBookingHistories(bookingHistoryObject bookingHistories) {
         this.bookingHistories = bookingHistories;
-    }
-
-    public String getSelectedLocation() {
-        return selectedLocation;
-    }
-
-    public void setSelectedLocation(String selectedLocation) {
-        this.selectedLocation = selectedLocation;
     }
 
 }

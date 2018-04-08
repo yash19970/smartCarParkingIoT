@@ -48,6 +48,9 @@
         <activity android:name=".ConfirmationPage"  android:noHistory="true"></activity>
         <activity android:name=".cancelReservation"></activity>
 
+        <activity android:name=".qrGenerationPark"  android:noHistory="true"></activity>
+        <activity android:name=".GetMyQr"  android:noHistory="true"></activity>
+
         <receiver
             android:name=".MyAlarm"
             android:enabled="true"

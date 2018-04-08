@@ -9,6 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -87,6 +91,11 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(NavMain.this,loginActivity.class);
                 startActivity(intent);
+
+            case 7:
+                title = "GetMyQr";
+                Intent i = new Intent(NavMain.this,GetMyQr.class);
+                startActivity(i);
             default:
                 break;
         }
@@ -106,4 +115,40 @@ public class NavMain extends AppCompatActivity implements FragmentDrawer.Fragmen
     public void onDrawerItemSelected(View view, int position) {
         displayView(position);
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        Toast.makeText(this, "here", Toast.LENGTH_LONG).show();
+        if(result != null) {
+            Toast.makeText(this, "else", Toast.LENGTH_LONG).show();
+            if (result.getContents() == null) {
+                Toast.makeText(this, "Scan cancelled", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this, "else", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                final String[] scannedString = result.getContents().toString().split("/");
+                //id,location,slot
+                Intent i = new Intent(this,qrGenerationPark.class );
+                i.putExtra("locationName",result.getContents().toString());
+                startActivity(i);
+            }
+
+
+        }
+        else {
+            Toast.makeText(this, "insuper else", Toast.LENGTH_LONG).show();
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+
+
+
+
+
+
 }
