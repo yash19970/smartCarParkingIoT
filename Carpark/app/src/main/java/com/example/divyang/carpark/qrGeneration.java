@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,12 +44,26 @@ public class qrGeneration extends AppCompatActivity {
         setContentView(R.layout.qr_code);
         qrcode = (ImageView) findViewById(R.id.qrcode);
         auth = FirebaseAuth.getInstance();
+        final String uid = auth.getCurrentUser().getUid();
        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         Intent i = getIntent();
         locationName = i.getStringExtra("locationName");
         reference = FirebaseDatabase.getInstance().getReference().child("Location").child(locationName);
         mainreference = FirebaseDatabase.getInstance().getReference().child("User");
         locations = (TextView) findViewById(R.id.locations);
+
+        //If cancel reservation button is clicked, send it to that page
+        final Button cancelReservationButton = (Button)findViewById(R.id.cancel);
+        cancelReservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(qrGeneration.this,cancelReservation.class);
+                startActivity(intent);
+            }
+        });
+
+
         reference.child("Sensor").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -58,6 +74,7 @@ public class qrGeneration extends AppCompatActivity {
                         String ts = tsLong.toString();
                         reference.child("Sensor").child(ds.getKey()).child("status").setValue("yes");
                         locations.setText("Location: "+locationName+"\n\n"+"Slot no: "+ds.getKey());
+                        mainreference.child(uid).child("allocated slot").setValue(ds.getKey());
                         reference.child("TotalSlots").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {

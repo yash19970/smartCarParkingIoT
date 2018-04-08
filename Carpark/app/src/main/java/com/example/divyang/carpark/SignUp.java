@@ -85,7 +85,7 @@ public class SignUp extends AppCompatActivity {
 
                                     reference = FirebaseDatabase.getInstance().getReference("User");
                                     String userId = reference.push().getKey();
-                                    User user = new User(auth.getCurrentUser().getUid(),checkUsername,checkemail,false,false, new bookingHistoryObject() ,null);
+                                    User user = new User(auth.getCurrentUser().getUid(),checkUsername,checkemail,false,false, new bookingHistoryObject() ,null,null);
 
                                     reference.child(auth.getCurrentUser().getUid()).setValue(user);
                                     startActivity(new Intent(SignUp.this, loginActivity.class));
